@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>elixir</id>
+    <title>Elixir</title>
+    <version>@@ELIXIR_VERSION@@</version>
+    <authors>Jose Valim</authors>
+    <owners>Luke Bakken, Team RabbitMQ</owners>
+    <summary>Elixir is a functional meta-programming aware language built on top of the Erlang VM</summary>
+    <description>Elixir is a functional meta-programming aware language built on top of the Erlang VM. It is a dynamic language with flexible syntax with macros support that leverages Erlang's abilities to build concurrent, distributed, fault-tolerant applications with hot code upgrades.
+
+Elixir also provides first-class support for pattern matching, polymorphism via protocols (similar to Clojure's), aliases and associative data structures (usually known as dicts or hashes in other programming languages).
+
+      Finally, Elixir and Erlang share the same bytecode and data types. This means you can invoke Erlang code from Elixir (and vice-versa) without any conversion or performance hit. This allows a developer to mix the expressiveness of Elixir with the robustness and performance of Erlang.
+    </description>
+    <projectUrl>http://elixir-lang.org/</projectUrl>
+    <projectSourceUrl>https://github.com/elixir-lang/elixir</projectSourceUrl>
+    <packageSourceUrl>https://github.com/chocolatey-beam/elixir-package</packageSourceUrl>
+    <releaseNotes>https://github.com/elixir-lang/elixir/releases/tag/v@@ELIXIR_VERSION@@</releaseNotes>
+    <tags>erlang concurrent programming language sdk otp elixir admin</tags>
+    <copyright>https://github.com/elixir-lang/elixir#license</copyright>
+    <licenseUrl>https://github.com/elixir-lang/elixir/blob/main/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <iconUrl>https://raw.githubusercontent.com/chocolatey-beam/elixir-package/main/elixir-icon.png</iconUrl>
+    <docsUrl>http://elixir-lang.org/docs.html</docsUrl>
+    <mailingListUrl>https://elixirforum.com</mailingListUrl>
+    <bugTrackerUrl>https://github.com/elixir-lang/elixir/issues</bugTrackerUrl>
+    <dependencies>
+      <dependency id="erlang" version="[25.0,25.2]" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="tools\chocolateyInstall.ps1" target="tools" />
+    <file src="tools\chocolateyUninstall.ps1" target="tools" />
+    <file src="tools\.skipAutoUninstall" target="tools" />
+  </files>
+</package>
