@@ -11,8 +11,6 @@ New-Variable -Name package -Value 'elixir' -Option Constant
 New-Variable -Name elixir_version -Value '@@ELIXIR_VERSION@@' -Option Constant
 New-Variable -Name otp_major_version -Value '@@OTP_MAJOR_VERSION@@' -Option Constant
  
-# https://github.com/elixir-lang/elixir/releases/download/v1.14.2/elixir-otp-25.zip
-# https://github.com/elixir-lang/elixir/releases/download/v1.14.2/elixir-otp-25.zip.sha256sum
 $params = @{
   PackageName = $package
   FileType = 'zip'
@@ -27,9 +25,6 @@ Install-ChocolateyZipPackage @params
 New-Variable -Name elixirPath -Option Constant `
     -Value (Join-Path -Path $env:ChocolateyPackageFolder -ChildPath bin)
  
-$machine_path = [Environment]::GetEnvironmentVariable('Path', 'Machine') 
-Install-ChocolateyEnvironmentVariable "Path" "$($machine_path);$elixirPath" Machine
-
 Install-ChocolateyPath $elixir_path -PathType 'Machine'
 
 Update-SessionEnvironment

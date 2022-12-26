@@ -1,11 +1,20 @@
-$package = 'Elixir'
+<#
+.SYNOPSIS
+An install script for installing Elixir via Chocolatey
 
-Uninstall-ChocolateyZipPackage $packageName $package $zipFileName 'Precompiled.zip'
+.NOTES
+Author: Luke Bakken - luke@bakken.io
+Version: 1.0.0
+#>
+
+New-Variable -Name package -Value 'elixir' -Option Constant
+New-Variable -Name elixir_zip_file -Value '@@ELIXIR_ZIP_FILE@@' -Option Constant
+
+Uninstall-ChocolateyZipPackage $packageName $package $zipFileName $elixir_zip_file
 
 #And insure we remove the shortcuts to the batch files as well
-#This is solely present for prior versions of the Elixir CNG package.
+#This is solely present for prior versions of the Elixir package.
 Remove-Item "$env:ChocolateyInstall/bin/iex.bat"
 Remove-Item "$env:ChocolateyInstall/bin/elixir.bat"
 Remove-Item "$env:ChocolateyInstall/bin/elixirc.bat"
 Remove-Item "$env:ChocolateyInstall/bin/mix.bat"
-
