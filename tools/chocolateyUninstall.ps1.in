@@ -12,9 +12,18 @@ New-Variable -Name elixir_zip_file -Value '@@ELIXIR_ZIP_FILE@@' -Option Constant
 
 Uninstall-ChocolateyZipPackage $packageName $package $zipFileName $elixir_zip_file
 
-#And insure we remove the shortcuts to the batch files as well
-#This is solely present for prior versions of the Elixir package.
-Remove-Item "$env:ChocolateyInstall/bin/iex.bat"
-Remove-Item "$env:ChocolateyInstall/bin/elixir.bat"
-Remove-Item "$env:ChocolateyInstall/bin/elixirc.bat"
-Remove-Item "$env:ChocolateyInstall/bin/mix.bat"
+# Ensure we remove the shortcuts to the batch files as well
+# This is solely present for prior versions of the Elixir package.
+$orig_ErrorActionPreference = $ErrorActionPreference
+try
+{
+    $ErrorActionPreference = 'Continue'
+    Remove-Item "$env:ChocolateyInstall/bin/iex.bat"
+    Remove-Item "$env:ChocolateyInstall/bin/elixir.bat"
+    Remove-Item "$env:ChocolateyInstall/bin/elixirc.bat"
+    Remove-Item "$env:ChocolateyInstall/bin/mix.bat"
+}
+finally
+{
+    $ErrorActionPreference = $orig_ErrorActionPreference
+}

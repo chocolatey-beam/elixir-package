@@ -1,6 +1,8 @@
 param(
     [switch]$PackAndTest = $false,
-    [switch]$Push = $false
+    [switch]$Push = $false,
+    [switch]$Debug = $false,
+    [switch]$Verbose = $false
 )
 
 if ($Push)
@@ -17,6 +19,24 @@ Set-StrictMode -Version 'Latest' -ErrorAction 'Stop' -Verbose
 
 New-Variable -Name curdir  -Option Constant -Value $PSScriptRoot
 Write-Host "[INFO] curdir: $curdir"
+
+if ($Debug)
+{
+    New-Variable -Name arg_debug  -Option Constant -Value '--debug'
+}
+else
+{
+    New-Variable -Name arg_debug  -Option Constant -Value ''
+}
+
+if ($Verbose)
+{
+    New-Variable -Name arg_verbose  -Option Constant -Value '--verbose'
+}
+else
+{
+    New-Variable -Name arg_verbose  -Option Constant -Value ''
+}
 
 try
 {
@@ -116,7 +136,7 @@ if ($PackAndTest)
     throw "[ERROR] 'choco pack' failed!"
   }
 
-  & choco install elixir --verbose --debug --yes --source ".;https://chocolatey.org/api/v2/"
+  & choco install elixir $arg_debug $arg_verbose --yes --source ".;https://chocolatey.org/api/v2/"
   if ($LASTEXITCODE -eq 0)
   {
       Write-Host "[INFO] 'choco install' succeeded."
@@ -126,24 +146,24 @@ if ($PackAndTest)
       throw "[ERROR] 'choco install' failed!"
   }
 
-  Write-Host "[INFO] choco un-installing Elixir..."
-  & choco uninstall elixir --verbose --debug --yes --source ".;https://chocolatey.org/api/v2/"
-  Write-Host "[INFO] uninstallation complete!"
-  #& $erl_exe -noninteractive -noshell -eval 'ok=crypto:start(),[{<<"OpenSSL">>,_,_}]=crypto:info_lib(),ok=init:stop().'
-  #try
-  #{
-  #    if ($LASTEXITCODE -eq 0)
-  #    {
-  #        Write-Host "[INFO] erl.exe check succeeded."
-  #    }
-  #    else
-  #    {
-  #        throw "[ERROR] erl.exe check failed!"
-  #    }
-  #}
-  #finally
-  #{
-  #}
+  & elixir.bat -e 'IO.puts("[INFO] elixir test succeeded!");System.stop(0)';
+  try
+  {
+      if ($LASTEXITCODE -eq 0)
+      {
+          Write-Host "[INFO] elixir.bat check succeeded."
+      }
+      else
+      {
+          throw "[ERROR] elixir.bat check failed!"
+      }
+  }
+  finally
+  {
+    Write-Host "[INFO] choco un-installing Elixir..."
+    & choco uninstall elixir $arg_debug $arg_verbose --yes --source ".;https://chocolatey.org/api/v2/"
+    Write-Host "[INFO] uninstallation complete!"
+  }
 }
 
 if ($Push)
