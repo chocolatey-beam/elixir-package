@@ -22,7 +22,7 @@ $params = @{
  
 Install-ChocolateyZipPackage @params
  
-New-Variable -Name elixirPath -Option Constant `
+New-Variable -Name elixir_path -Option Constant `
     -Value (Join-Path -Path $env:ChocolateyPackageFolder -ChildPath bin)
  
 Install-ChocolateyPath $elixir_path -PathType 'Machine'
