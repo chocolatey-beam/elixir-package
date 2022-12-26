@@ -1,37 +1,41 @@
-$package = 'Elixir'
+<#
+.SYNOPSIS
+An install script for installing Elixir via Chocolatey
+
+.NOTES
+Author: Luke Bakken - luke@bakken.io
+Version: 1.0.0
+#>
+
+New-Variable -Name package -Value 'elixir' -Option Constant
+New-Variable -Name elixir_version -Value '@@ELIXIR_VERSION@@' -Option Constant
+New-Variable -Name otp_major_version -Value '@@OTP_MAJOR_VERSION@@' -Option Constant
  
 # https://github.com/elixir-lang/elixir/releases/download/v1.14.2/elixir-otp-25.zip
 # https://github.com/elixir-lang/elixir/releases/download/v1.14.2/elixir-otp-25.zip.sha256sum
-$version = '1.9.1'
 $params = @{
   PackageName = $package
   FileType = 'zip'
-  CheckSum = '17e43cb1627a0fa5625bc370cec0964ad6471ef242f1549e316db73c0d94fcc6'
+  CheckSum = '@@SHA256@@'
   CheckSumType = 'sha256'
-  Url = "https://github.com/elixir-lang/elixir/releases/download/v$version/Precompiled.zip"
- 
-  UnzipLocation = $env:chocolateyPackageFolder;
-}
- 
-if (!(Test-Path($params.UnzipLocation)))
-{
-  New-Item $params.UnzipLocation -Type Directory | Out-Null
+  Url = "https://github.com/elixir-lang/elixir/releases/download/v$elixir_version/elixir-otp-$otp_major_version.zip"
+  UnzipLocation = $env:ChocolateyPackageFolder;
 }
  
 Install-ChocolateyZipPackage @params
  
-$elixirPath = "$env:ChocolateyPackageFolder/bin"
-if (![System.IO.Directory]::Exists($elixirPath))
-{
-    $elixirPath = "$env:ChocolateyPackageFolder/bin";
-}
+New-Variable -Name elixirPath -Option Constant `
+    -Value (Join-Path -Path $env:ChocolateyPackageFolder -ChildPath bin)
  
 $machine_path = [Environment]::GetEnvironmentVariable('Path', 'Machine') 
 Install-ChocolateyEnvironmentVariable "Path" "$($machine_path);$elixirPath" Machine
+
+Install-ChocolateyPath $elixir_path -PathType 'Machine'
+
 Update-SessionEnvironment
  
 Write-Host @'
-The Elixir commands have been added to your path.
+The Elixir commands have been added to the system PATH.
  
 Please restart your current shell session to access Elixir commands:
 elixir

@@ -18,7 +18,7 @@ Elixir also provides first-class support for pattern matching, polymorphism via 
     <packageSourceUrl>https://github.com/chocolatey-beam/elixir-package</packageSourceUrl>
     <releaseNotes>https://github.com/elixir-lang/elixir/releases/tag/v@@ELIXIR_VERSION@@</releaseNotes>
     <tags>erlang concurrent programming language sdk otp elixir admin</tags>
-    <copyright>https://github.com/elixir-lang/elixir#license</copyright>
+    <copyright>"Elixir" and the Elixir logo are copyright (c) 2012 Plataformatec</copyright>
     <licenseUrl>https://github.com/elixir-lang/elixir/blob/main/LICENSE</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <iconUrl>https://raw.githubusercontent.com/chocolatey-beam/elixir-package/main/elixir-icon.png</iconUrl>
@@ -26,7 +26,7 @@ Elixir also provides first-class support for pattern matching, polymorphism via 
     <mailingListUrl>https://elixirforum.com</mailingListUrl>
     <bugTrackerUrl>https://github.com/elixir-lang/elixir/issues</bugTrackerUrl>
     <dependencies>
-      <dependency id="erlang" version="[25.0,25.2]" />
+      <dependency id="erlang" version="[25.0,26.0)" />
     </dependencies>
   </metadata>
   <files>
