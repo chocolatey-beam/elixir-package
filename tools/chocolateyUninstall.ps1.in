@@ -17,7 +17,7 @@ Uninstall-ChocolateyZipPackage $packageName $package $zipFileName $elixir_zip_fi
 $orig_ErrorActionPreference = $ErrorActionPreference
 try
 {
-    $ErrorActionPreference = 'Continue'
+    $ErrorActionPreference = 'SilentlyContinue'
     Remove-Item "$env:ChocolateyInstall/bin/iex.bat"
     Remove-Item "$env:ChocolateyInstall/bin/elixir.bat"
     Remove-Item "$env:ChocolateyInstall/bin/elixirc.bat"
