@@ -6,10 +6,14 @@ An install script for installing Elixir via Chocolatey
 Author: Luke Bakken - luke@bakken.io
 Version: 1.0.0
 #>
+$ErrorActionPreference = 'Stop'
 
 New-Variable -Name package -Value 'elixir' -Option Constant
 New-Variable -Name elixir_version -Value '@@ELIXIR_VERSION@@' -Option Constant
 New-Variable -Name otp_major_version -Value '@@OTP_MAJOR_VERSION@@' -Option Constant
+
+New-Variable -Name tools_path -Option Constant `
+  -Value (Split-Path -Parent $MyInvocation.MyCommand.Definition)
  
 $params = @{
   PackageName = $package
@@ -17,15 +21,15 @@ $params = @{
   CheckSum = '@@SHA256@@'
   CheckSumType = 'sha256'
   Url = "https://github.com/elixir-lang/elixir/releases/download/v$elixir_version/elixir-otp-$otp_major_version.zip"
-  UnzipLocation = $env:ChocolateyPackageFolder;
+  UnzipLocation = $tools_path
 }
  
 Install-ChocolateyZipPackage @params
  
-New-Variable -Name elixir_path -Option Constant `
-    -Value (Join-Path -Path $env:ChocolateyPackageFolder -ChildPath bin)
+New-Variable -Name elixir_bin -Option Constant `
+    -Value (Join-Path -Path $tools_path -ChildPath bin)
  
-Install-ChocolateyPath $elixir_path -PathType 'Machine'
+Install-ChocolateyPath $elixir_bin -PathType 'Machine'
 
 Update-SessionEnvironment
  

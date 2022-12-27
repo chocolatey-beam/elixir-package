@@ -2,7 +2,8 @@ param(
     [switch]$PackAndTest = $false,
     [switch]$Push = $false,
     [switch]$Debug = $false,
-    [switch]$Verbose = $false
+    [switch]$Verbose = $false,
+    [string]$ApiKey = $null
 )
 
 if ($Push)
@@ -11,7 +12,7 @@ if ($Push)
     Write-Host "[INFO] PACKAGE WILL BE TESTED AND PUSHED"
 }
 
-$DebugPreference = "Continue"
+$DebugPreference = 'Continue'
 $ErrorActionPreference = 'Stop'
 # Set-PSDebug -Strict -Trace 1
 Set-PSDebug -Off
@@ -41,16 +42,19 @@ else
 try
 {
   $ProgressPreference = 'SilentlyContinue'
-  New-Variable -Name erlang_json -Option Constant `
-    -Value (Invoke-WebRequest -Uri https://api.github.com/repos/erlang/otp/releases/latest | ConvertFrom-Json)
+  New-Variable -Name erlang_tags -Option Constant `
+    -Value (Invoke-WebRequest -Uri https://api.github.com/repos/erlang/otp/tags?per_page=100 | ConvertFrom-Json)
 }
 finally
 {
   $ProgressPreference = 'Continue'
 }
 
+New-Variable -Name latest_erlang_tag -Option Constant `
+  -Value ($erlang_tags | Where-Object { $_.name -match '^OTP-2[56789]' } | Sort-Object -Descending { $_.name } | Select-Object -First 1)
+
 New-Variable -Name otp_major_version -Option Constant `
-  -Value (($erlang_json.tag_name -replace '^OTP-','') -replace '\..*','')
+  -Value (($latest_erlang_tag.name -replace '^OTP-','') -replace '\..*','')
 
 try
 {
@@ -168,7 +172,7 @@ if ($PackAndTest)
 
 if ($Push)
 {
-  & choco apikey --yes --key $env:CHOCOLATEY_API_KEY --source https://push.chocolatey.org/
+  & choco apikey --yes --key $ApiKey --source https://push.chocolatey.org/
   if ($LASTEXITCODE -eq 0)
   {
     Write-Host "[INFO] 'choco apikey' succeeded."
