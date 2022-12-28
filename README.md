@@ -4,11 +4,7 @@ https://community.chocolatey.org/packages/elixir
 
 # Release
 
-After a new Erlang release clone the
-[`chocolatey-beam/elixir-package`](https://github.com/chocolatey-beam/elixir-package)
-repository and replace all instances of the previous version with the current.
-
-Open PowerShell in Administrator mode and navigate to the `elixir-package` repository.
+Open PowerShell in Administrator mode and navigate to the clone of the  `chocolatey-beam/elixir-package` repository.
 
 Run
 
