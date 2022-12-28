@@ -26,19 +26,22 @@ $params = @{
  
 Install-ChocolateyZipPackage @params
  
-New-Variable -Name elixir_bin -Option Constant `
-    -Value (Join-Path -Path $tools_path -ChildPath bin)
+New-Variable -Name elixir_bin -Option Constant -Value (Join-Path -Path $tools_path -ChildPath bin)
  
-Install-ChocolateyPath $elixir_bin -PathType 'Machine'
+Write-Host @"
+------------------------------------------------------------------------
+NOTE:
 
-Update-SessionEnvironment
- 
-Write-Host @'
-The Elixir commands have been added to the system PATH.
- 
-Please restart your current shell session to access Elixir commands:
+The Elixir commands have been installed to:
+
+$elixir_bin
+
+Please add this directory to your PATH,
+then your shell session to access these commands:
+
 elixir
 elixirc
 mix
-iex.bat
-'@
+iex
+------------------------------------------------------------------------
+"@

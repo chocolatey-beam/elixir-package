@@ -3,7 +3,8 @@ param(
     [switch]$Push = $false,
     [switch]$Debug = $false,
     [switch]$Verbose = $false,
-    [string]$ApiKey = $null
+    [string]$ApiKey = $null,
+    [switch]$Uninstall = $true
 )
 
 if ($Push)
@@ -164,9 +165,16 @@ if ($PackAndTest)
   }
   finally
   {
-    Write-Host "[INFO] choco un-installing Elixir..."
-    & choco uninstall elixir $arg_debug $arg_verbose --yes --source ".;https://chocolatey.org/api/v2/"
-    Write-Host "[INFO] uninstallation complete!"
+    if ($Uninstall)
+    {
+      Write-Host "[INFO] choco un-installing Elixir..."
+      & choco uninstall elixir $arg_debug $arg_verbose --yes --source ".;https://chocolatey.org/api/v2/"
+      Write-Host "[INFO] uninstallation complete!"
+    }
+    else
+    {
+      Write-Host "[INFO] choco NOT un-installing Elixir!"
+    }
   }
 }
 
