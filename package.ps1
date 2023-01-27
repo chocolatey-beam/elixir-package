@@ -57,18 +57,22 @@ New-Variable -Name latest_erlang_tag -Option Constant `
 New-Variable -Name otp_major_version -Option Constant `
   -Value (($latest_erlang_tag.name -replace '^OTP-','') -replace '\..*','')
 
+
+New-Variable -Name elixir_release_uri -Option Constant `
+  -Value "https://api.github.com/repos/elixir-lang/elixir/releases/latest"
+
 try
 {
   $ProgressPreference = 'SilentlyContinue'
   New-Variable -Name elixir_json -Option Constant `
-    -Value (Invoke-WebRequest -Uri https://api.github.com/repos/elixir-lang/elixir/releases/latest | ConvertFrom-Json)
+    -Value (Invoke-WebRequest -Uri $elixir_release_uri | ConvertFrom-Json)
 }
 finally
 {
   $ProgressPreference = 'Continue'
 }
 
-New-Variable -Name elixir_version -Option Constant ` -Value ($elixir_json.tag_name -replace '^v', '')
+New-Variable -Name elixir_version -Option Constant -Value ($elixir_json.tag_name -replace '^v', '')
 
 Write-Host "[INFO] elixir_version: $elixir_version"
 Write-Host "[INFO] otp_major_version: $otp_major_version"
