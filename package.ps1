@@ -145,7 +145,7 @@ if ($PackAndTest)
     throw "[ERROR] 'choco pack' failed!"
   }
 
-  & choco install elixir $arg_debug $arg_verbose --yes --source ".;https://chocolatey.org/api/v2/"
+  & choco install elixir $arg_debug $arg_verbose --yes --skip-virus-check --source ".;https://chocolatey.org/api/v2/"
   if ($LASTEXITCODE -eq 0)
   {
       Write-Host "[INFO] 'choco install' succeeded."
