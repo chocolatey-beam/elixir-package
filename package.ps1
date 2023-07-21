@@ -77,10 +77,12 @@ New-Variable -Name elixir_version -Option Constant -Value ($elixir_json.tag_name
 Write-Host "[INFO] elixir_version: $elixir_version"
 Write-Host "[INFO] otp_major_version: $otp_major_version"
 
+New-Variable -Name elixir_zip_asset_name -Option Constant -Value ("elixir-otp-$otp_major_version.zip")
+
 New-Variable -Name zip_asset_node  -Option Constant `
-    -Value ($elixir_json.assets | Where-Object { $_.name -eq 'elixir-otp-25.zip' })
+    -Value ($elixir_json.assets | Where-Object { $_.name -eq $elixir_zip_asset_name })
 New-Variable -Name zip_asset_sha256_node  -Option Constant `
-    -Value ($elixir_json.assets | Where-Object { $_.name -eq 'elixir-otp-25.zip.sha256sum' })
+    -Value ($elixir_json.assets | Where-Object { $_.name -eq "$elixir_zip_asset_name.sha256sum" })
 
 New-Variable -Name elixir_zip_file -Option Constant -Value $zip_asset_node.name
 New-Variable -Name elixir_zip_sha256sum_file -Option Constant -Value $zip_asset_sha256_node.name
