@@ -110,7 +110,7 @@ New-Variable -Name elixir_zip_file_sha256 -Option Constant `
 
 if ($elixir_zip_sha256_from_file -eq $elixir_zip_file_sha256)
 {
-    Write-Host "[INFO] zip installer calculated sha256 *matches* downloaded file: $elixir_zip_file_sha256"
+    Write-Host "[INFO] zip installer calculated sha256 ('$elixir_zip_file_sha256') *matches* downloaded sha256 from '$elixir_zip_sha256sum_file': '$elixir_zip_sha256_from_file'"
 }
 else
 {
