@@ -52,7 +52,7 @@ finally
 }
 
 New-Variable -Name latest_erlang_tag -Option Constant `
-  -Value ($erlang_tags | Where-Object { $_.name -match '^OTP-2[56789](\.[0-9]){1,}$' } | Sort-Object -Descending { $_.name } | Select-Object -First 1)
+  -Value ($erlang_tags | Where-Object { $_.name -match '^OTP-2[789](\.[0-9]){1,}$' } | Sort-Object -Descending { $_.name } | Select-Object -First 1)
 
 New-Variable -Name otp_major_version -Option Constant `
   -Value (($latest_erlang_tag.name -replace '^OTP-','') -replace '\..*','')
@@ -157,7 +157,7 @@ if ($PackAndTest)
       throw "[ERROR] 'choco install' failed!"
   }
 
-  & elixir.bat -e 'IO.puts("[INFO] elixir test succeeded!");System.stop(0)';
+  & 'C:\ProgramData\chocolatey\lib\elixir\tools\bin\elixir.bat' -e "System.stop(0)"
   try
   {
       if ($LASTEXITCODE -eq 0)
